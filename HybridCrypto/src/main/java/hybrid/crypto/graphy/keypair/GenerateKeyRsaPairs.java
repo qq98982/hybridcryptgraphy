@@ -8,12 +8,15 @@ import java.security.PublicKey;
 
 import hybrid.crypto.graphy.utils.KeyUtil;
 
-public class GenerateKeys {
+public class GenerateKeyRsaPairs {
+
     private KeyPairGenerator keyGen;
+
     private PublicKey publicKey;
+
     private PrivateKey privateKey;
 
-    public GenerateKeys(int length) {
+    public GenerateKeyRsaPairs(int length) {
         try {
             this.keyGen = KeyPairGenerator.getInstance("RSA");
             this.keyGen.initialize(length);
@@ -22,7 +25,7 @@ public class GenerateKeys {
         }
     }
 
-    public void creatKeys() {
+    public void createKeys() {
         final KeyPair keyPair = keyGen.generateKeyPair();
         this.privateKey = keyPair.getPrivate();
         this.publicKey = keyPair.getPublic();
@@ -37,10 +40,10 @@ public class GenerateKeys {
     }
 
     public static void main(String[] args) {
-        GenerateKeys alice = new GenerateKeys(1024);
-        GenerateKeys bob = new GenerateKeys(1024);
-        alice.creatKeys();
-        bob.creatKeys();
+        GenerateKeyRsaPairs alice = new GenerateKeyRsaPairs(1024);
+        GenerateKeyRsaPairs bob = new GenerateKeyRsaPairs(1024);
+        alice.createKeys();
+        bob.createKeys();
 
         KeyUtil.writeToFile("KeyPair/publicKey_Alice", alice.getPublicKey().getEncoded());
         KeyUtil.writeToFile("KeyPair/privateKey_Alice", alice.getPrivateKey().getEncoded());
