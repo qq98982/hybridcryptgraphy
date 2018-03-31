@@ -2,10 +2,15 @@ package hybrid.crypto.graphy.onekey;
 
 import static hybrid.crypto.graphy.utils.KeyUtil.writeToFile;
 
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
+/**
+ * @author Henry
+ */
 public class GenerateSymmetricKey {
     private SecretKeySpec secretKeySpec;
 
@@ -16,12 +21,14 @@ public class GenerateSymmetricKey {
         this.secretKeySpec = new SecretKeySpec(key, algorithm);
     }
 
-    private SecretKeySpec getKey(){
+    private SecretKeySpec getKey() {
         return this.secretKeySpec;
     }
 
     public static void main(String[] args) {
         GenerateSymmetricKey generateSymmetricKey = new GenerateSymmetricKey(16, "AES");
-        writeToFile("OneKey/secretKey",generateSymmetricKey.getKey().getEncoded());
+        writeToFile("OneKey/secretKey",
+                    DatatypeConverter.printBase64Binary(generateSymmetricKey.getKey().getEncoded()).getBytes(
+                            StandardCharsets.UTF_8));
     }
 }
